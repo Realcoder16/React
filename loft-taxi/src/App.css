@@ -1,0 +1,34 @@
+.App-form-text{
+
+display: flex;
+justify-content: flex-start;
+
+
+}
+
+body{
+  background: black;
+  color: white;
+}
+
+.App-header{
+  background: white;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.App-list{
+ 
+  margin-right: 200px;
+  display: flex;
+ 
+  list-style:none;
+
+}
+
+.App-list li{
+  margin-left: 20px;
+}
