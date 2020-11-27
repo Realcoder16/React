@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import './App.css';
 import { Map } from "./Map"
 import { Profile } from "./Profile"
 import { Login } from "./Login"
 import { Registration } from "./Registration"
 import { Header } from "./Header"
+
 
 
 
