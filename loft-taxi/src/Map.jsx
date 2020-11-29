@@ -1,8 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import mapboxgl from "mapbox-gl";
-import { Header } from "./Header";
 
-export class Map extends React.Component {
+export class Map extends Component {
   componentDidMount() {
     mapboxgl.accessToken =
       "pk.eyJ1IjoicmVhbGNvZGVyMTYiLCJhIjoiY2toejgyZXYwMDg0ZzJycWtucWNzaDg4OCJ9.x9kh7bQkbm9kSFwAxHYwAg";
@@ -26,6 +25,14 @@ export class Map extends React.Component {
       width: "100%",
     };
 
-    return <div style={style} ref={(el) => (this.mapContainer = el)} />;
+    return (
+      <div className="map-wrapper">
+        <div
+          className="map"
+          style={style}
+          ref={(el) => (this.mapContainer = el)}
+        />
+      </div>
+    );
   }
 }
