@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { withAuth } from "./AuthContext";
+import React from "react";
+import AuthContext from "./AuthContext";
 
-export class Profile extends Component {
+export class Profile extends React.Component {
   unauthenticate = (event) => {
     event.preventDefault();
     this.props.logOut();
-    this.props.navigate("Login");
+    this.props.navigateTo("Login");
   };
 
   render() {
@@ -17,5 +17,3 @@ export class Profile extends Component {
     );
   }
 }
-
-export const ProfileWithAuth = withAuth(Profile);
