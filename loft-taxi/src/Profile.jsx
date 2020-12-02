@@ -20,4 +20,10 @@ const Profile = ({ navigateTo }) => {
   );
 };
 
+Profile.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  logOut: PropTypes.func,
+  navigateTo: PropTypes.func,
+};
+
 export default Profile;

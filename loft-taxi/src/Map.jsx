@@ -29,6 +29,7 @@ export class Map extends Component {
       <div className="map-wrapper">
         <div
           className="map"
+          data-testid="map"
           style={style}
           ref={(el) => (this.mapContainer = el)}
         />

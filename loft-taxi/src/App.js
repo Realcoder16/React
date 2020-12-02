@@ -52,4 +52,8 @@ import AuthProvider from './AuthProvider'
 }
 }
 
+App.propTypes = {
+  navigateTo: PropTypes.func
+};
+
 export default App;

@@ -41,4 +41,10 @@ const Login = (props) => {
   );
 };
 
+Login.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  logIn: PropTypes.func,
+  navigateTo: PropTypes.func,
+};
+
 export default Login;
