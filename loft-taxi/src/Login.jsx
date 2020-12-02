@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
 import AuthContext from "./AuthContext";
 
-const Login = (navigateTo) => {
-  const { isLoggedIn } = React.useContext(AuthContext);
-  const { logIn } = React.useContext(AuthContext);
+const Login = (props) => {
+  console.log(props);
+  const { navigateTo } = props;
+  const { isLoggedIn, logIn } = useContext(AuthContext);
 
   const authenticate = (event) => {
     event.preventDefault();

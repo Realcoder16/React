@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import './App.css';
 import { Map } from "./Map"
-import { Profile } from "./Profile"
+import  Profile  from "./Profile"
 import  Login  from "./Login"
 import { Registration } from "./Registration"
 import { Header } from "./Header"
 import AuthContext from "./AuthContext";
+import AuthProvider from './AuthProvider'
 
 
  
@@ -34,8 +35,10 @@ import AuthContext from "./AuthContext";
  };
 
     return (
-      <>
-     <Header navigateTo={this.navigateTo}/>
+     
+      <AuthProvider>
+ <>
+  <Header navigateTo={this.navigateTo}/>
                <main>
           <section>
           {PAGES[this.state.currentPage]}
@@ -43,6 +46,8 @@ import AuthContext from "./AuthContext";
         </main>
       </>
 
+      </AuthProvider>
+   
 );
 }
 }

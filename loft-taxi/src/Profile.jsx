@@ -1,19 +1,23 @@
 import React from "react";
 import AuthContext from "./AuthContext";
+import Login from "./Login";
 
-export class Profile extends React.Component {
-  unauthenticate = (event) => {
+const Profile = ({ navigateTo }) => {
+  const { isLoggedIn, logOut } = React.useContext(AuthContext);
+  const unauthenticate = (event) => {
     event.preventDefault();
-    this.props.logOut();
-    this.props.navigateTo("Login");
+    logOut();
+    navigateTo("Login");
   };
 
-  render() {
-    return (
-      <p>
-        Profile.
-        <button onClick={this.unauthenticate}>Log out</button>
-      </p>
-    );
-  }
-}
+  if (!isLoggedIn) return <Login />;
+
+  return (
+    <p>
+      Profile.
+      <button onClick={unauthenticate}>Log out</button>
+    </p>
+  );
+};
+
+export default Profile;
