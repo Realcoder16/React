@@ -6,8 +6,8 @@ import  Profile  from "./Profile"
 import  Login  from "./Login"
 import { Registration } from "./Registration"
 import { Header } from "./Header"
-import AuthContext from "./AuthContext";
 import AuthProvider from './AuthProvider'
+
 
 
  
@@ -26,31 +26,28 @@ import AuthProvider from './AuthProvider'
 
 
 
-  render() {
-   const PAGES = {
-  Map:  <Map navigateTo = {this.navigateTo}/>,
-  Profile:  <Profile navigateTo = {this.navigateTo}/>,
-  Login: <Login navigateTo = {this.navigateTo} />,
-  Registration:  <Registration navigateTo = {this.navigateTo} />,
- };
-
-    return (
-     
-      <AuthProvider>
- <>
-  <Header navigateTo={this.navigateTo}/>
-               <main>
-          <section>
-          {PAGES[this.state.currentPage]}
-          </section>
-        </main>
-      </>
-
-      </AuthProvider>
-   
-);
-}
-}
+    render() {
+      const PAGES = {
+        Map: () => <Map navigateTo={this.navigateTo} />,
+        Profile: () => <Profile navigateTo={this.navigateTo} />,
+        Login: () => <Login navigateTo={this.navigateTo} />,
+        Registration: () => <Registration navigateTo={this.navigateTo} />,
+      };
+      const Page = PAGES[this.state.currentPage];
+      return (
+        <AuthProvider>
+          <>
+            <Header navigateTo={this.navigateTo} />
+            <main>
+              <section>
+                <Page />
+              </section>
+            </main>
+          </>
+        </AuthProvider>
+      );
+    }
+  } 
 
 App.propTypes = {
   navigateTo: PropTypes.func

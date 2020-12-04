@@ -1,6 +1,7 @@
 import React from "react";
 import AuthContext from "./AuthContext";
 import Login from "./Login";
+import PropTypes from "prop-types";
 
 const Profile = ({ navigateTo }) => {
   const { isLoggedIn, logOut } = React.useContext(AuthContext);
@@ -15,7 +16,7 @@ const Profile = ({ navigateTo }) => {
   return (
     <p>
       Profile.
-      <button onClick={unauthenticate}>Log out</button>
+      <button data-tested = 'test' onClick={unauthenticate}>Log out</button>
     </p>
   );
 };
