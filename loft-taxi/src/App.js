@@ -6,8 +6,8 @@ import  Profile  from "./Profile"
 import  Login  from "./Login"
 import { Registration } from "./Registration"
 import { Header } from "./Header"
-import AuthProvider from './AuthProvider'
 
+import { connect } from "react-redux";
 
 
  
@@ -35,7 +35,7 @@ import AuthProvider from './AuthProvider'
       };
       const Page = PAGES[this.state.currentPage];
       return (
-        <AuthProvider>
+        
           <>
             <Header navigateTo={this.navigateTo} />
             <main>
@@ -44,7 +44,7 @@ import AuthProvider from './AuthProvider'
               </section>
             </main>
           </>
-        </AuthProvider>
+        
       );
     }
   } 

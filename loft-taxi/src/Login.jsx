@@ -1,20 +1,20 @@
-import React, { useContext } from "react";
-import AuthContext from "./AuthContext";
+import React from "react";
+import props from "prop-types";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logIn } from "./action";
 
-const Login = (props) => {
-  const { navigateTo } = props;
-  const { isLoggedIn, logIn } = useContext(AuthContext);
-  console.log(isLoggedIn);
+const Login = ({ navigateTo }) => {
+  console.log(props.auth.isLoggedIn);
   const authenticate = (event) => {
     event.preventDefault();
     const { email, password } = event.target;
-    logIn(email.value, password.value);
+    props.auth.logIn(email.value, password.value);
   };
 
   return (
     <>
-      {isLoggedIn ? (
+      {props.auth.isLoggedIn ? (
         <p>
           You are logged in{" "}
           <button onClick={() => navigateTo("Profile")}>Go to Profile</button>
@@ -47,4 +47,9 @@ Login.propTypes = {
   navigateTo: PropTypes.func,
 };
 
-export default Login;
+export default connect(
+  (state) => ({ isLoggedIn: state.auth.isLoggedIn, logIn: state.auth.logIn }),
+  {
+    logIn,
+  }
+)(Login);

@@ -1,22 +1,25 @@
 import React from "react";
-import AuthContext from "./AuthContext";
 import Login from "./Login";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logOut } from "./action";
+import props from "prop-types";
 
 const Profile = ({ navigateTo }) => {
-  const { isLoggedIn, logOut } = React.useContext(AuthContext);
   const unauthenticate = (event) => {
     event.preventDefault();
-    logOut();
+    props.auth.logOut();
     navigateTo("Login");
   };
 
-  if (!isLoggedIn) return <Login />;
+  if (!props.auth.isLoggedIn) return <Login />;
 
   return (
     <p>
       Profile.
-      <button data-tested = 'test' onClick={unauthenticate}>Log out</button>
+      <button data-tested="test" onClick={unauthenticate}>
+        Log out
+      </button>
     </p>
   );
 };
@@ -27,4 +30,6 @@ Profile.propTypes = {
   navigateTo: PropTypes.func,
 };
 
-export default Profile;
+export default connect((state) => ({ isLoggedIn: state.auth.isLoggedIn }), {
+  logOut,
+})(Profile);
