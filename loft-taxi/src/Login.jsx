@@ -2,22 +2,22 @@ import React from "react";
 import props from "prop-types";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logIn } from "./action";
+import { authenticate } from "./action";
+import { Link } from "react-router-dom";
 
-const Login = ({ navigateTo }) => {
-  console.log(props.auth.isLoggedIn);
-  const authenticate = (event) => {
+const Login = ({ isLoggedIn }) => {
+  console.log(props);
+  const authenticate = (event, { authenticate }) => {
     event.preventDefault();
     const { email, password } = event.target;
-    props.auth.logIn(email.value, password.value);
+    authenticate(email.value, password.value);
   };
 
   return (
     <>
-      {props.auth.isLoggedIn ? (
+      {isLoggedIn ? (
         <p>
-          You are logged in{" "}
-          <button onClick={() => navigateTo("Profile")}>Go to Profile</button>
+          You are logged in <Link to="/profile">Go to Profile</Link>
         </p>
       ) : (
         <>
@@ -25,9 +25,9 @@ const Login = ({ navigateTo }) => {
             <h2 className="App-form-title">Войти</h2>
             <div className="App-form-text">
               <div>Новый пользователь?</div>
-              <div onClick={() => navigateTo("Registration")}>
+              <Link to="/registration">
                 Зарегистрируйся
-              </div>
+              </Link>
             </div>
             <label htmlFor="email">Имя пользователя*</label>
             <input id="email" type="email" name="email" size="email" />
@@ -50,6 +50,6 @@ Login.propTypes = {
 export default connect(
   (state) => ({ isLoggedIn: state.auth.isLoggedIn, logIn: state.auth.logIn }),
   {
-    logIn,
+    authenticate,
   }
 )(Login);

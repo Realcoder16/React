@@ -1,3 +1,5 @@
-import {createStore } from 'redux'
+import {createStore, applyMiddleware } from 'redux'
 import rootReducer from './reducers/index'
-export const store = createStore(rootReducer)
+
+import {authMiddleware, regMiddleware} from './authMiddleware' 
+export const store = createStore(rootReducer,applyMiddleware(authMiddleware, regMiddleware))

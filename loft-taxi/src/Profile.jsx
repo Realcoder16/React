@@ -5,14 +5,13 @@ import { connect } from "react-redux";
 import { logOut } from "./action";
 import props from "prop-types";
 
-const Profile = ({ navigateTo }) => {
+const Profile = ({ logOut, isLoggedIn }) => {
   const unauthenticate = (event) => {
     event.preventDefault();
-    props.auth.logOut();
-    navigateTo("Login");
+    logOut();
   };
 
-  if (!props.auth.isLoggedIn) return <Login />;
+  if (!isLoggedIn) return <Login />;
 
   return (
     <p>
