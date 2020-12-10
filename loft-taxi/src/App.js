@@ -4,7 +4,7 @@ import './App.css';
 import { Map } from "./Map"
 import  Profile  from "./Profile"
 import  Login  from "./Login"
-import { Registration } from "./Registration"
+import Registration from "./Registration"
 import { Header } from "./Header"
 
 import { connect } from "react-redux";

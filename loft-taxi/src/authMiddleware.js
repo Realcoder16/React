@@ -23,7 +23,7 @@ export const regMiddleware = (store) => (next) => async (action) =>{
     const {email,password,name,surname} = action.payload;
     const success = await serverRegistration(email,password,name,surname)
     if(success){
-      store.dispatch(logOut())
+      store.dispatch(logIn())
     }
   } else {
     next(action)

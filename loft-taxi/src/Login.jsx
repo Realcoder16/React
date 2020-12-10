@@ -5,12 +5,12 @@ import { connect } from "react-redux";
 import { authenticate } from "./action";
 import { Link } from "react-router-dom";
 
-const Login = ({ isLoggedIn }) => {
+const Login = ({ isLoggedIn, dispatch, logIn }) => {
   console.log(props);
-  const authenticate = (event, { authenticate }) => {
+  const handleAuthenticate = (event) => {
     event.preventDefault();
     const { email, password } = event.target;
-    authenticate(email.value, password.value);
+    dispatch(authenticate(email.value, password.value));
   };
 
   return (
@@ -21,13 +21,11 @@ const Login = ({ isLoggedIn }) => {
         </p>
       ) : (
         <>
-          <form onSubmit={authenticate}>
+          <form onSubmit={handleAuthenticate}>
             <h2 className="App-form-title">Войти</h2>
             <div className="App-form-text">
               <div>Новый пользователь?</div>
-              <Link to="/registration">
-                Зарегистрируйся
-              </Link>
+              <Link to="/registration">Зарегистрируйся</Link>
             </div>
             <label htmlFor="email">Имя пользователя*</label>
             <input id="email" type="email" name="email" size="email" />
@@ -35,6 +33,7 @@ const Login = ({ isLoggedIn }) => {
             <input id="password" type="password" name="password" size="28" />
             <button type="submit">Login</button>
           </form>
+          
         </>
       )}
     </>
@@ -47,9 +46,7 @@ Login.propTypes = {
   navigateTo: PropTypes.func,
 };
 
-export default connect(
-  (state) => ({ isLoggedIn: state.auth.isLoggedIn, logIn: state.auth.logIn }),
-  {
-    authenticate,
-  }
-)(Login);
+export default connect((state) => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  logIn: state.auth.logIn,
+}))(Login);
