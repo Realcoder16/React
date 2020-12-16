@@ -33,6 +33,15 @@ export class Map extends Component {
           style={style}
           ref={(el) => (this.mapContainer = el)}
         />
+        <>
+          <form className="taxi">
+            <label htmlFor="from">Откуда</label>
+            <input id="from" type="from" name="from" size="28" />
+            <label htmlFor="to">Куда</label>
+            <input id="to" type="to" name="to" size="28" />
+            <button type="submit">Вызвать такси</button>
+          </form>
+        </>
       </div>
     );
   }

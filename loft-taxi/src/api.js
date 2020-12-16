@@ -17,3 +17,37 @@ export const serverRegistration = async (email, password, name, surname) => {
     method: "POST",
   });
 };
+
+export const saveProfile = async (data) => {
+  const response = await (
+    await fetch(`https://loft-taxi.glitch.me/card`, {
+      body: JSON.stringify(data),
+      "Content-Type": "application/json",
+
+      method: "POST",
+    })
+  ).json();
+
+  if (!response.success) throw new Error(response.error);
+  return response;
+};
+
+export const routeAddress = async (address1, address2) => {
+  return fetch(`https://loft-taxi.glitch.me/route`, {
+    body: JSON.stringify({ address1, address2 }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
+};
+
+export const getAddress = async (data) => {
+  return fetch(`https://loft-taxi.glitch.me/addressList`, {
+    body: JSON.stringify({ data }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+  });
+};

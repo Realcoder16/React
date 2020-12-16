@@ -2,22 +2,29 @@ import React from "react";
 import props from "prop-types";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { authenticate } from "./action";
+import { authenticate, logOut } from "./action";
 import { Link } from "react-router-dom";
 
-const Login = ({ isLoggedIn, dispatch, logIn }) => {
-  console.log(props);
+const Login = ({ isLoggedIn, dispatch, token }) => {
   const handleAuthenticate = (event) => {
     event.preventDefault();
     const { email, password } = event.target;
     dispatch(authenticate(email.value, password.value));
   };
 
+  const handleUnauthenticate = (event) => {
+    event.preventDefault();
+    dispatch(logOut());
+  };
+
   return (
     <>
       {isLoggedIn ? (
         <p>
-          You are logged in <Link to="/profile">Go to Profile</Link>
+          You are logged in{" "}
+          <button data-tested="test" onClick={handleUnauthenticate}>
+            Log out
+          </button>
         </p>
       ) : (
         <>
@@ -33,7 +40,6 @@ const Login = ({ isLoggedIn, dispatch, logIn }) => {
             <input id="password" type="password" name="password" size="28" />
             <button type="submit">Login</button>
           </form>
-          
         </>
       )}
     </>
@@ -48,5 +54,7 @@ Login.propTypes = {
 
 export default connect((state) => ({
   isLoggedIn: state.auth.isLoggedIn,
+  token: state.auth.token,
   logIn: state.auth.logIn,
+  logOut: state.auth.logOut,
 }))(Login);

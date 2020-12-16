@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { registration } from "./action";
 import { Link } from "react-router-dom";
 import props from "prop-types";
-import PropTypes from "prop-types";
 
 const Registration = ({ logOut, isLoggedIn, dispatch, logIn }) => {
   console.log(props);
@@ -14,7 +13,6 @@ const Registration = ({ logOut, isLoggedIn, dispatch, logIn }) => {
     dispatch(
       registration(email.value, password.value, name.value, surname.value)
     );
-    console.log(email.value, password.value, name.value, surname.value);
   };
 
   return (
@@ -53,5 +51,5 @@ const Registration = ({ logOut, isLoggedIn, dispatch, logIn }) => {
 export default connect((state) => ({
   isLoggedIn: state.auth.isLoggedIn,
   logIn: state.auth.logIn,
-  logIn: state.auth.logOut,
+  logOut: state.auth.logOut,
 }))(Registration);

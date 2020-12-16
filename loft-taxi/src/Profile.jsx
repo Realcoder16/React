@@ -1,34 +1,83 @@
-import React from "react";
-import Login from "./Login";
-import PropTypes from "prop-types";
+import React, { useState } from "react";
+import { Button, Grid, Paper, TextField, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
-import { logOut } from "./action";
-import props from "prop-types";
+import { saveProfile } from "./action";
+import auth from "./reducers/auth";
 
-const Profile = ({ logOut, isLoggedIn }) => {
-  const unauthenticate = (event) => {
-    event.preventDefault();
-    logOut();
+const Profile = ({ dispatch, token }) => {
+  const [cardName, setCardName] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expireDate, setExpireDate] = useState("");
+  const [cvc, setCvc] = useState("");
+
+  const handleSave = () => {
+    dispatch(saveProfile({ cardName, cardNumber, expireDate, cvc, token }));
   };
 
-  if (!isLoggedIn) return <Login />;
-
   return (
-    <p>
-      Profile.
-      <button data-tested="test" onClick={unauthenticate}>
-        Log out
-      </button>
-    </p>
+    <div className="profile__wrapper">
+      <Paper className="profile__paper" elevation={8}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} align="center">
+            <Typography className="profile__caption" variant="h4" gutterBottom>
+              Профиль
+            </Typography>
+            <p>Введите платежные данные</p>
+          </Grid>
+          <Grid container spacing={12} item xs={6}>
+            <TextField
+              fullWidth
+              label="Имя владельца"
+              value={cardName}
+              onChange={(event) => setCardName(event.target.value)}
+            />
+            <TextField
+              fullWidth
+              label="Номер карты"
+              value={cardNumber}
+              onChange={(event) => setCardNumber(event.target.value)}
+            />
+
+            <Grid container spacing={3}>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  label="MM/YY"
+                  value={expireDate}
+                  onChange={(event) => setExpireDate(event.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  label="CVC"
+                  value={cvc}
+                  onChange={(event) => setCvc(event.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} align="center">
+            <Button
+              className="profile__button"
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={handleSave}
+            >
+              <Typography variant="button" display="block">
+                Сохранить
+              </Typography>
+            </Button>
+          </Grid>
+        </Grid>
+      </Paper>
+    </div>
   );
 };
 
-Profile.propTypes = {
-  isLoggedIn: PropTypes.bool,
-  logOut: PropTypes.func,
-  navigateTo: PropTypes.func,
-};
-
-export default connect((state) => ({ isLoggedIn: state.auth.isLoggedIn }), {
-  logOut,
-})(Profile);
+export default connect((state) => ({
+  token: state.auth.token,
+}))(Profile);
