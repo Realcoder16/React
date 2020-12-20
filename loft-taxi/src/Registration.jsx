@@ -20,8 +20,8 @@ const Registration = ({ isLoggedIn, dispatch }) => {
     <>
       {isLoggedIn ? ( // isLoggedIn не приходит, соответственно этого действия не происходит
         <p>
-          Вы зарегистрированы и сразу можете войти на сайт{" "}
-          <Link to="/profile">Go to Profile</Link>
+          Вы зарегистрированы и сразу можете войти на сайт для заполнения данных
+          карты <Link to="/profile">Go to Profile</Link>
         </p>
       ) : (
         <>

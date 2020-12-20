@@ -59,8 +59,9 @@ export function* handleSaveProfile(action) {
     cvc,
     token
   );
-
-  yield put(mapToStateProfile({ response }));
+  if (response.success === true) {
+    yield put(mapToStateProfile());
+  }
 }
 
 export function* profileSaga() {

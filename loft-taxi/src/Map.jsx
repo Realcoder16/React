@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { route, addressList } from "./action";
 
 class Map extends Component {
+  //как сюда передать mapIn из profile, чтобы при значении false запретить доступ к этой стринице?
   constructor(props) {
     super(props);
     console.log(props);
