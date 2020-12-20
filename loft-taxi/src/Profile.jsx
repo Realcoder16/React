@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Button, Grid, Paper, TextField, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
 import { saveProfile } from "./action";
-import auth from "./reducers/auth";
 
 const Profile = ({ dispatch, token }) => {
   const [cardName, setCardName] = useState("");
@@ -79,5 +78,5 @@ const Profile = ({ dispatch, token }) => {
 };
 
 export default connect((state) => ({
-  token: state.auth.token,
+  token: state.token,
 }))(Profile);

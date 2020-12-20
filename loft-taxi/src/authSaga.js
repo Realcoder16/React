@@ -1,14 +1,16 @@
-import { takeEvery, call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest } from "redux-saga/effects";
 import * as api from "./api";
 import {
-  registration,
+  REGISTRATION,
   logIn,
-  authenticate,
-  saveProfile,
-  route,
-  addressList,
+  AUTHENTICATE,
+  SAVE_IT,
+  ROUTE,
+  ADDRESS,
+  fillroute,
+  mapToStateProfile,
+  storeAddress,
 } from "./action";
-import auth from "./reducers/auth";
 
 export function* authenticateSaga(action) {
   debugger;
@@ -24,64 +26,65 @@ export function* authenticateSaga(action) {
 }
 
 export function* authSaga() {
-  yield takeLatest(authenticate, authenticateSaga);
+  yield takeLatest(AUTHENTICATE, authenticateSaga);
 }
 
 export function* registrationSaga(action) {
   const { email, password, name, surname } = action.payload;
-  const result = yield call(
+  const registr = yield call(
     api.serverRegistration,
     email,
     password,
     name,
     surname
   );
-  console.log(result);
-  if (result.success === true) {
+  console.log(registr);
+  if (registr.success === true) {
     yield put(logIn());
   }
 }
 
 export function* regSaga() {
-  yield takeLatest(registration, registrationSaga);
+  yield takeLatest(REGISTRATION, registrationSaga);
 }
 
 export function* handleSaveProfile(action) {
-  try {
-    const response = yield call(api.saveProfile, action.payload);
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-  }
+  const { cardName, cardNumber, expireDate, cvc, token } = action.payload;
+
+  const response = yield call(
+    api.saveProfile,
+    cardName,
+    cardNumber,
+    expireDate,
+    cvc,
+    token
+  );
+
+  yield put(mapToStateProfile({ response }));
 }
 
 export function* profileSaga() {
-  yield takeLatest(saveProfile, handleSaveProfile);
+  yield takeLatest(SAVE_IT, handleSaveProfile);
 }
 
 export function* routeListSaga(action) {
   console.log(action.payload);
-  const address1 = action.payload.address1;
-  const address2 = action.payload.address2;
-  const result = yield call(api.routeAddress, address1, address2);
-
-  if (result.success === true) {
-    console.log(result);
-  }
+  const to = action.payload.to;
+  const from = action.payload.from;
+  const data = yield call(api.routeAddress, to, from);
+  yield put(fillroute(data));
 }
 
 export function* routeSaga() {
-  yield takeLatest(route, routeListSaga);
+  yield takeLatest(ROUTE, routeListSaga);
 }
 
 export function* addressListSaga(action) {
-  const result = yield call(api.getAddress);
+  const address = yield call(api.getAddress);
 
-  if (result.success === true) {
-    console.log(result);
-  }
+  yield put(storeAddress(address));
 }
 
 export function* addressSaga() {
-  yield takeLatest(addressList, addressListSaga);
+  yield takeLatest(ADDRESS, addressListSaga);
 }

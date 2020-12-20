@@ -4,10 +4,11 @@ import { registration } from "./action";
 import { Link } from "react-router-dom";
 import props from "prop-types";
 
-const Registration = ({ logOut, isLoggedIn, dispatch, logIn }) => {
+const Registration = ({ isLoggedIn, dispatch }) => {
   console.log(props);
 
   const handleRegistration = (event) => {
+    // не могу понять, но кнока вообще на клик не рeагирует. Вроде по коду все верно. Есть сомнения только, почему "isLoggedIn: state.auth.isLoggedIn"  здесь auth, а не сразу state.isLoggedIn
     event.preventDefault();
     const { email, password, name, surname } = event.target;
     dispatch(
@@ -17,7 +18,7 @@ const Registration = ({ logOut, isLoggedIn, dispatch, logIn }) => {
 
   return (
     <>
-      {isLoggedIn ? (
+      {isLoggedIn ? ( // isLoggedIn не приходит, соответственно этого действия не происходит
         <p>
           Вы зарегистрированы и сразу можете войти на сайт{" "}
           <Link to="/profile">Go to Profile</Link>
@@ -50,6 +51,4 @@ const Registration = ({ logOut, isLoggedIn, dispatch, logIn }) => {
 };
 export default connect((state) => ({
   isLoggedIn: state.auth.isLoggedIn,
-  logIn: state.auth.logIn,
-  logOut: state.auth.logOut,
 }))(Registration);

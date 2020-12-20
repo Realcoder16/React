@@ -17,6 +17,7 @@ export const serverRegistration = async (email, password, name, surname) => {
     method: "POST",
   });
 };
+console.log(serverRegistration);
 
 export const saveProfile = async (data) => {
   const response = await (
@@ -32,9 +33,9 @@ export const saveProfile = async (data) => {
   return response;
 };
 
-export const routeAddress = async (address1, address2) => {
+export const routeAddress = async (to, from) => {
   return fetch(`https://loft-taxi.glitch.me/route`, {
-    body: JSON.stringify({ address1, address2 }),
+    body: JSON.stringify({ to, from }),
     headers: {
       "Content-Type": "application/json",
     },
