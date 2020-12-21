@@ -2,45 +2,55 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import './App.css';
 import { Map } from "./Map"
-import { Profile } from "./Profile"
-import { Login } from "./Login"
+import  Profile  from "./Profile"
+import  Login  from "./Login"
 import { Registration } from "./Registration"
 import { Header } from "./Header"
+import AuthProvider from './AuthProvider'
 
 
 
+ 
 
 
-class App extends React.Component {
-
-  state = { currentPage: "Login" }
+ class App extends React.Component {
+  state = { currentPage: "Login" };
 
   navigateTo = (page) => {
-    this.setState({ currentPage: page })
-  };
+   
+      this.setState({ currentPage: page });
+    }
+  
 
-  render() { 
-  const PAGES = {
-  Map: <Map/>,
-  Profile: <Profile/>,
-  Login: <Login navigateTo={this.navigateTo} />,
-  Registration: <Registration navigateTo={this.navigateTo} />
-}
-    return (
-      <>
-     <Header navigateTo={this.navigateTo}/>
-               <main>
-          <section>
-            {PAGES[this.state.currentPage]}
-          </section>
-        </main>
-      </>
-
-    );
-  }
-
-} 
+ 
 
 
+
+    render() {
+      const PAGES = {
+        Map: () => <Map navigateTo={this.navigateTo} />,
+        Profile: () => <Profile navigateTo={this.navigateTo} />,
+        Login: () => <Login navigateTo={this.navigateTo} />,
+        Registration: () => <Registration navigateTo={this.navigateTo} />,
+      };
+      const Page = PAGES[this.state.currentPage];
+      return (
+        <AuthProvider>
+          <>
+            <Header navigateTo={this.navigateTo} />
+            <main>
+              <section>
+                <Page />
+              </section>
+            </main>
+          </>
+        </AuthProvider>
+      );
+    }
+  } 
+
+App.propTypes = {
+  navigateTo: PropTypes.func
+};
 
 export default App;

@@ -37,3 +37,18 @@ body{
   margin-left: 20px;
 }
 
+
+.map-wrapper{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.map {
+
+  position: absolute;
+  top: 100px;
+  right: 0;
+  height: 0;
+  left: 0;
+}
