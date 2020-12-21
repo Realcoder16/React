@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, Switch, Route } from "react-router-dom";
 export const Header = ({ navigateTo }) => {
   return (
     <>
@@ -9,31 +10,13 @@ export const Header = ({ navigateTo }) => {
         <nav>
           <ul className="App-list">
             <li>
-              <button
-                onClick={() => {
-                  navigateTo("Map");
-                }}
-              >
-                Карта
-              </button>
+              <Link to="/map">Карта</Link>
             </li>
             <li>
-              <button
-                onClick={() => {
-                  navigateTo("Profile");
-                }}
-              >
-                Профиль
-              </button>
+              <Link to="/profile">Профиль</Link>
             </li>
             <li>
-              <button
-                onClick={() => {
-                  navigateTo("Login");
-                }}
-              >
-                Выйти
-              </button>
+              <Link to="/">Выйти</Link>
             </li>
           </ul>
         </nav>

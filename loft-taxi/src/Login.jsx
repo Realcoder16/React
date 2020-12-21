@@ -1,33 +1,31 @@
-import React, { useContext } from "react";
-import AuthContext from "./AuthContext";
+import React from "react";
+import props from "prop-types";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { authenticate } from "./action";
+import { Link } from "react-router-dom";
 
-const Login = (props) => {
-  const { navigateTo } = props;
-  const { isLoggedIn, logIn } = useContext(AuthContext);
-  console.log(isLoggedIn);
-  const authenticate = (event) => {
+const Login = ({ isLoggedIn, dispatch, logIn }) => {
+  console.log(props);
+  const handleAuthenticate = (event) => {
     event.preventDefault();
     const { email, password } = event.target;
-    logIn(email.value, password.value);
+    dispatch(authenticate(email.value, password.value));
   };
 
   return (
     <>
       {isLoggedIn ? (
         <p>
-          You are logged in{" "}
-          <button onClick={() => navigateTo("Profile")}>Go to Profile</button>
+          You are logged in <Link to="/profile">Go to Profile</Link>
         </p>
       ) : (
         <>
-          <form onSubmit={authenticate}>
+          <form onSubmit={handleAuthenticate}>
             <h2 className="App-form-title">Войти</h2>
             <div className="App-form-text">
               <div>Новый пользователь?</div>
-              <div onClick={() => navigateTo("Registration")}>
-                Зарегистрируйся
-              </div>
+              <Link to="/registration">Зарегистрируйся</Link>
             </div>
             <label htmlFor="email">Имя пользователя*</label>
             <input id="email" type="email" name="email" size="email" />
@@ -35,6 +33,7 @@ const Login = (props) => {
             <input id="password" type="password" name="password" size="28" />
             <button type="submit">Login</button>
           </form>
+          
         </>
       )}
     </>
@@ -47,4 +46,7 @@ Login.propTypes = {
   navigateTo: PropTypes.func,
 };
 
-export default Login;
+export default connect((state) => ({
+  isLoggedIn: state.auth.isLoggedIn,
+  logIn: state.auth.logIn,
+}))(Login);
