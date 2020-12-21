@@ -9,7 +9,11 @@ justify-content: flex-start;
 body{
   background: black;
   color: white;
+  
 }
+
+
+
 
 .App-header{
   background: white;
@@ -22,7 +26,7 @@ body{
 
 .App-list{
  
-  margin-right: 200px;
+  margin-right: 205px;
   display: flex;
  
   list-style:none;
@@ -32,3 +36,4 @@ body{
 .App-list li{
   margin-left: 20px;
 }
+
