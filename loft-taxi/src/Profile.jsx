@@ -13,7 +13,7 @@ const Profile = ({ dispatch, mapIn, token }) => {
 
   const handleSave = () => {
     dispatch(saveProfile({ cardName, cardNumber, expireDate, cvc, token }));
-  };
+  }; // token здесь мне не нужен, у меня авторизует все mapIn. mapIn поступает в state в статусе true при успешном сохранении и ответе от сервера, происходит   put(mapToStateProfile())
 
   return (
     <>
@@ -95,5 +95,6 @@ const Profile = ({ dispatch, mapIn, token }) => {
 };
 
 export default connect((state) => ({
-  token: state.mapIn,
+  mapIn: state.profileReducer.mapIn,
+  token: state.profileReducer.token,
 }))(Profile);

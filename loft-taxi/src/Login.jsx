@@ -55,6 +55,4 @@ Login.propTypes = {
 export default connect((state) => ({
   isLoggedIn: state.auth.isLoggedIn,
   token: state.auth.token,
-  logIn: state.auth.logIn,
-  logOut: state.auth.logOut,
 }))(Login);

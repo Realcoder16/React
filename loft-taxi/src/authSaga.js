@@ -13,7 +13,6 @@ import {
 } from "./action";
 
 export function* authenticateSaga(action) {
-  debugger;
   console.log(action.payload);
   const email = action.payload.email;
   const password = action.payload.password;
@@ -49,6 +48,9 @@ export function* regSaga() {
 }
 
 export function* handleSaveProfile(action) {
+  console.log(action.payload);
+  debugger;
+
   const { cardName, cardNumber, expireDate, cvc, token } = action.payload;
 
   const response = yield call(
@@ -59,6 +61,7 @@ export function* handleSaveProfile(action) {
     cvc,
     token
   );
+  console.log(response);
   if (response.success === true) {
     yield put(mapToStateProfile());
   }
@@ -80,8 +83,9 @@ export function* routeSaga() {
   yield takeLatest(ROUTE, routeListSaga);
 }
 
-export function* addressListSaga(action) {
+export function* addressListSaga() {
   const address = yield call(api.getAddress);
+  console.log(address)
 
   yield put(storeAddress(address));
 }

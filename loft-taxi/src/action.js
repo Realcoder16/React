@@ -20,7 +20,11 @@ export const registration = (email, password, name, surname) => ({
   payload: { email, password, name, surname },
 });
 
-export const saveProfile = () => ({ type: SAVE_IT });
+export const saveProfile = (data) => ({
+  type: SAVE_IT,
+  payload: { data },
+});
+
 export const mapToStateProfile = (response) => ({
   type: PROFILE,
   payload: { response },
@@ -31,12 +35,12 @@ export const route = (to, from) => ({
   payload: { to, from },
 });
 
-export const fillroute = () => ({
+export const fillroute = (data) => ({
   type: FILLROUTE,
   payload: { data },
 });
 
-export const addressList = (data) => ({
+export const getAddressList = (data) => ({
   type: ADDRESS,
   payload: { data },
 });

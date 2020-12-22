@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import mapboxgl from "mapbox-gl";
 import { connect } from "react-redux";
-import { route, addressList } from "./action";
+import { route, getAddressList } from "./action";
 
 class Map extends Component {
   //как сюда передать mapIn из profile, чтобы при значении false запретить доступ к этой стринице?
@@ -12,19 +12,16 @@ class Map extends Component {
     const { dispatch } = props;
   }
 
-  callAddress(event) {
-    //эта функция должна получить address c сервера в виде массива и передать его из redux state в props в элемене Map через connect(). Она вызывается по click на поле to и from
-    event.preventDefault();
-    this.dispatch(addressList); // dispatch виден в props, но он не определяется, undefined.
+  // dispatch виден в props, но он не определяется, undefined.
   }
 
   //здесь должен появиться props address, приконектенный из state, который должен передать данные в поля to и from в Input в виде выпадающего списка. Я его не знаю, как реализовать.
 
-  handleMapState(event) {
+  handleMapState = (event) => {
     // эта функция должна передать выбранные в поле из массива address values to и from через action, и у нас появляется еще один props - coordinates, который будет потреблять функциональный элемент drawRoute и строить маршрут
     const { to, from } = event.target;
     event.preventDefault();
-    this.dispatch(route({ to, from })); // dispatch виден в props, но он не определяется, undefined.
+    this.props.dispatch(route({ to, from })); // dispatch виден в props, но он не определяется, undefined.
   }
 
   drawRoute = (map, coordinates) => {
@@ -59,6 +56,9 @@ class Map extends Component {
   };
 
   componentDidMount() {
+    
+      this.props.dispatch(getAddressList); 
+
     mapboxgl.accessToken =
       "pk.eyJ1IjoicmVhbGNvZGVyMTYiLCJhIjoiY2toejgyZXYwMDg0ZzJycWtucWNzaDg4OCJ9.x9kh7bQkbm9kSFwAxHYwAg";
     this.map = new mapboxgl.Map({
@@ -103,7 +103,6 @@ class Map extends Component {
               type="from"
               name="from"
               size="28"
-              onClick={this.callAddress}
               onChange={(event) => this.setState({ from: event.target.value })}
             />
             <label htmlFor="to">Куда</label>
@@ -112,9 +111,13 @@ class Map extends Component {
               type="to"
               name="to"
               size="28"
-              onClick={this.callAddress}
-              onChange={(event) => this.setState({ to: event.target.value })}
-            />
+              onChange={(event) => this.setState({ to: event.target.value })}/>
+                <select id="exampleList">
+                 <option value="from">
+                 {address.map(addresses => <option  key={addresses}>{addresses}
+                 </option>
+               </select>
+                          
             <button type="submit" onClick={this.handleMapState}>
               Вызвать такси
             </button>
@@ -127,5 +130,5 @@ class Map extends Component {
 
 export default connect((state) => ({
   coordinate: state.route,
-  address: state.address,
+  address: state.addressListReducer.address,
 }))(Map);

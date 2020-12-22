@@ -15,22 +15,24 @@ export const serverRegistration = async (email, password, name, surname) => {
       "Content-Type": "application/json",
     },
     method: "POST",
-  });
+  }).then((res) => res.json());
 };
-console.log(serverRegistration);
 
-export const saveProfile = async (data) => {
-  const response = await (
-    await fetch(`https://loft-taxi.glitch.me/card`, {
-      body: JSON.stringify(data),
+export const saveProfile = async (
+  cardName,
+  cardNumber,
+  expireDate,
+  cvc,
+  token
+) => {
+  return fetch(`https://loft-taxi.glitch.me/card`, {
+    body: JSON.stringify(cardName, cardNumber, expireDate, cvc, token),
+    headers: {
       "Content-Type": "application/json",
+    },
 
-      method: "POST",
-    })
-  ).json();
-
-  if (!response.success) throw new Error(response.error);
-  return response;
+    method: "POST",
+  }).then((res) => res.json());
 };
 
 export const routeAddress = async (to, from) => {
@@ -50,5 +52,5 @@ export const getAddress = async (data) => {
       "Content-Type": "application/json",
     },
     method: "GET",
-  });
+  }).then((res) => res.json());
 };

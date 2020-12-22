@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducers/index";
 import createSagaMiddleware from "redux-saga";
-import { authSaga, regSaga, profileSaga, routeSaga } from "./authSaga";
+import { rootSaga } from "./rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 export const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
-sagaMiddleware.run(authSaga, regSaga, profileSaga, routeSaga);
+sagaMiddleware.run(rootSaga);
