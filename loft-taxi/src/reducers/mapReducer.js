@@ -1,11 +1,11 @@
 import { FILLROUTE } from "../action";
 
-const initialState = { route: "" };
+const initialState = [];
 
 export default function mapReducer(state = initialState, action) {
   switch (action.type) {
     case FILLROUTE: {
-      return { route: action.payload };
+      return action.payload;
     }
 
     default:

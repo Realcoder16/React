@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { authenticate, logOut } from "./action";
 import { Link } from "react-router-dom";
 
-const Login = ({ isLoggedIn, dispatch, token }) => {
+const Login = ({ isLoggedIn, dispatch }) => {
   const handleAuthenticate = (event) => {
     event.preventDefault();
     const { email, password } = event.target;

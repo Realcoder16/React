@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import mapboxgl from "mapbox-gl";
 import { connect } from "react-redux";
 import { route, getAddressList } from "./action";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import Paper from "@material-ui/core/Paper";
+import { isEqual } from "lodash";
 
 class Map extends Component {
-  //как сюда передать mapIn из profile, чтобы при значении false запретить доступ к этой стринице?
   constructor(props) {
     super(props);
     console.log(props);
@@ -12,17 +15,11 @@ class Map extends Component {
     const { dispatch } = props;
   }
 
-  // dispatch виден в props, но он не определяется, undefined.
-  }
-
-  //здесь должен появиться props address, приконектенный из state, который должен передать данные в поля to и from в Input в виде выпадающего списка. Я его не знаю, как реализовать.
-
   handleMapState = (event) => {
-    // эта функция должна передать выбранные в поле из массива address values to и from через action, и у нас появляется еще один props - coordinates, который будет потреблять функциональный элемент drawRoute и строить маршрут
-    const { to, from } = event.target;
+    const { to, from } = this.state;
     event.preventDefault();
-    this.props.dispatch(route({ to, from })); // dispatch виден в props, но он не определяется, undefined.
-  }
+    this.props.dispatch(route({ to, from }));
+  };
 
   drawRoute = (map, coordinates) => {
     map.flyTo({
@@ -56,8 +53,7 @@ class Map extends Component {
   };
 
   componentDidMount() {
-    
-      this.props.dispatch(getAddressList); 
+    this.props.dispatch(getAddressList());
 
     mapboxgl.accessToken =
       "pk.eyJ1IjoicmVhbGNvZGVyMTYiLCJhIjoiY2toejgyZXYwMDg0ZzJycWtucWNzaDg4OCJ9.x9kh7bQkbm9kSFwAxHYwAg";
@@ -70,8 +66,13 @@ class Map extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.coordinate !== prevProps.coordinate) {
-      this.drawRoute(this.map, this.props.coordinate);
+    if (isEqual(this.props.coordinates, prevProps.coordinates)) {
+      console.log("Маршрут не менялся");
+      console.log(this.props.coordinates);
+    } else {
+      this.drawRoute(this.map, this.props.coordinates);
+      console.log("Маршрут поменялся");
+      console.log(this.props.coordinates);
     }
   }
 
@@ -82,10 +83,13 @@ class Map extends Component {
   render() {
     const style = {
       position: "absolute",
-      top: "100px",
+      top: "0px",
       bottom: 0,
       width: "100%",
     };
+
+    const { to, from } = this.state;
+    const { addresses } = this.props;
 
     return (
       <div className="map-wrapper">
@@ -97,30 +101,37 @@ class Map extends Component {
         />
         <>
           <form className="taxi">
-            <label htmlFor="from">Откуда</label>
-            <input
-              id="from"
-              type="from"
-              name="from"
-              size="28"
-              onChange={(event) => this.setState({ from: event.target.value })}
-            />
-            <label htmlFor="to">Куда</label>
-            <input
-              id="to"
-              type="to"
-              name="to"
-              size="28"
-              onChange={(event) => this.setState({ to: event.target.value })}/>
-                <select id="exampleList">
-                 <option value="from">
-                 {address.map(addresses => <option  key={addresses}>{addresses}
-                 </option>
-               </select>
-                          
-            <button type="submit" onClick={this.handleMapState}>
-              Вызвать такси
-            </button>
+            <Paper className="paper">
+              <label htmlFor="from">Откуда</label>
+              <Select
+                value={from}
+                onChange={(event) =>
+                  this.setState({ from: event.target.value })
+                }
+              >
+                {this.props.addresses.map((address) => (
+                  <MenuItem key={address} value={address}>
+                    {address}
+                  </MenuItem>
+                ))}
+              </Select>
+              <label htmlFor="to">Куда</label>
+
+              <Select
+                value={to}
+                onChange={(event) => this.setState({ to: event.target.value })}
+              >
+                {addresses.map((address) => (
+                  <MenuItem key={address} value={address}>
+                    {address}
+                  </MenuItem>
+                ))}
+              </Select>
+
+              <button type="submit" onClick={this.handleMapState}>
+                Вызвать такси
+              </button>
+            </Paper>
           </form>
         </>
       </div>
@@ -129,6 +140,6 @@ class Map extends Component {
 }
 
 export default connect((state) => ({
-  coordinate: state.route,
-  address: state.addressListReducer.address,
+  coordinates: state.map,
+  addresses: state.address,
 }))(Map);

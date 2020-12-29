@@ -56,8 +56,13 @@ body{
 
 .taxi{
   position: absolute;
-  top: 120px;
+  top: 20px;
   right: 0;
   height: 0;
-  left: 0;
+  left: 10px;
+}
+
+
+.paper{
+  width: 20%;
 }

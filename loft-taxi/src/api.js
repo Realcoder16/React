@@ -35,22 +35,14 @@ export const saveProfile = async (
   }).then((res) => res.json());
 };
 
-export const routeAddress = async (to, from) => {
-  return fetch(`https://loft-taxi.glitch.me/route`, {
-    body: JSON.stringify({ to, from }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "GET",
-  });
+export const routeAddress = async ({ to, from }) => {
+  return fetch(
+    `https://loft-taxi.glitch.me/route?address1=${to}&address2=${from}`
+  ).then((res) => res.json());
 };
 
 export const getAddress = async (data) => {
-  return fetch(`https://loft-taxi.glitch.me/addressList`, {
-    body: JSON.stringify({ data }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "GET",
-  }).then((res) => res.json());
+  return fetch(`https://loft-taxi.glitch.me/addressList`).then((res) =>
+    res.json()
+  );
 };

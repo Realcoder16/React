@@ -9,11 +9,11 @@ export const FILLROUTE = "FILLROUTE";
 export const PROFILE = "PROFILE";
 export const STOREADDRESS = "STOREADDRESS";
 
-export const logIn = () => ({ type: LOG_IN });
+export const logIn = (token) => ({ type: LOG_IN, payload: { token } });
 export const logOut = () => ({ type: LOG_OUT });
-export const authenticate = (email, password) => ({
+export const authenticate = (email, password, token) => ({
   type: AUTHENTICATE,
-  payload: { email, password },
+  payload: { email, password, token },
 });
 export const registration = (email, password, name, surname) => ({
   type: REGISTRATION,
@@ -30,22 +30,21 @@ export const mapToStateProfile = (response) => ({
   payload: { response },
 });
 
-export const route = (to, from) => ({
+export const route = (payload) => ({
   type: ROUTE,
-  payload: { to, from },
+  payload,
 });
 
-export const fillroute = (data) => ({
+export const fillroute = (payload) => ({
   type: FILLROUTE,
-  payload: { data },
+  payload,
 });
 
-export const getAddressList = (data) => ({
+export const getAddressList = () => ({
   type: ADDRESS,
-  payload: { data },
 });
 
 export const storeAddress = (address) => ({
   type: STOREADDRESS,
-  payload: { address },
+  payload: address,
 });

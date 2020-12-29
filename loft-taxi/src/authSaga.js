@@ -16,11 +16,12 @@ export function* authenticateSaga(action) {
   console.log(action.payload);
   const email = action.payload.email;
   const password = action.payload.password;
+
   const result = yield call(api.serverLogin, email, password);
 
   if (result.success === true) {
     console.log(result);
-    yield put(logIn());
+    yield put(logIn(result.token));
   }
 }
 
@@ -72,10 +73,7 @@ export function* profileSaga() {
 }
 
 export function* routeListSaga(action) {
-  console.log(action.payload);
-  const to = action.payload.to;
-  const from = action.payload.from;
-  const data = yield call(api.routeAddress, to, from);
+  const data = yield call(api.routeAddress, action.payload);
   yield put(fillroute(data));
 }
 
@@ -84,10 +82,9 @@ export function* routeSaga() {
 }
 
 export function* addressListSaga() {
-  const address = yield call(api.getAddress);
-  console.log(address)
+  const { addresses } = yield call(api.getAddress);
 
-  yield put(storeAddress(address));
+  yield put(storeAddress(addresses));
 }
 
 export function* addressSaga() {

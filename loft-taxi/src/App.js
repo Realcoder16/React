@@ -7,10 +7,9 @@ import Login from "./Login";
 import Registration from "./Registration";
 import { Header } from "./Header";
 
-import { connect } from "react-redux";
-import { Link, Switch, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { PrivateRoute } from "./PrivateRoute";
-import styled, { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 body{background-color: black;}`;

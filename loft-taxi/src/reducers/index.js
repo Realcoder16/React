@@ -5,7 +5,7 @@ import profileReducer from "./profileReducer";
 import addressListReducer from "./addressListReducer";
 export default combineReducers({
   auth,
-  mapReducer,
-  profileReducer,
-  addressListReducer,
+  map: mapReducer,
+  profile: profileReducer,
+  address: addressListReducer,
 });
