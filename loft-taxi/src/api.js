@@ -35,7 +35,7 @@ export const saveProfile = async (
   }).then((res) => res.json());
 };
 
-export const routeAddress = async ({ to, from }) => {
+export const routeAddress = async ({ from, to }) => {
   return fetch(
     `https://loft-taxi.glitch.me/route?address1=${to}&address2=${from}`
   ).then((res) => res.json());

@@ -1,11 +1,11 @@
-import { PROFILE } from "../action";
+import { GETPROFILE } from "../action";
 
-const initialState = { mapIn: false };
+const initialState = [];
 
 export default function profileReducer(state = initialState, action) {
   switch (action.type) {
-    case PROFILE: {
-      return { mapIn: true };
+    case GETPROFILE: {
+      return action.payload;
     }
 
     default:

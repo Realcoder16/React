@@ -5,16 +5,13 @@ import { saveProfile } from "./action";
 import { Link } from "react-router-dom";
 
 const Profile = ({ dispatch, mapIn, token }) => {
-  // не совсем ясно, откуда приходит token, точнее, понятно, что он получается во время авторизации, но как он приходит сюда, через props? и какую роль играет токен?
   const [cardName, setCardName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expireDate, setExpireDate] = useState("");
   const [cvc, setCvc] = useState("");
-
   const handleSave = () => {
     dispatch(saveProfile({ cardName, cardNumber, expireDate, cvc, token }));
-  }; // token здесь мне не нужен, у меня авторизует все mapIn. mapIn поступает в state в статусе true при успешном сохранении и ответе от сервера, происходит   put(mapToStateProfile())
-
+  };
   return (
     <>
       <div className="profile__wrapper">
@@ -86,5 +83,5 @@ const Profile = ({ dispatch, mapIn, token }) => {
 };
 
 export default connect((state) => ({
-    token: state.auth.token,
+  token: state.auth.token,
 }))(Profile);

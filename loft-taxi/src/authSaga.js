@@ -5,8 +5,8 @@ import {
   logIn,
   AUTHENTICATE,
   SAVE_IT,
-  ROUTE,
-  ADDRESS,
+  GETROUTE,
+  GETADDRESS,
   fillroute,
   mapToStateProfile,
   storeAddress,
@@ -49,22 +49,11 @@ export function* regSaga() {
 }
 
 export function* handleSaveProfile(action) {
-  console.log(action.payload);
-  debugger;
-
-  const { cardName, cardNumber, expireDate, cvc, token } = action.payload;
-
-  const response = yield call(
-    api.saveProfile,
-    cardName,
-    cardNumber,
-    expireDate,
-    cvc,
-    token
-  );
+  const response = yield call(api.saveProfile, action.payload);
   console.log(response);
+  console.log(action.payload);
   if (response.success === true) {
-    yield put(mapToStateProfile());
+    yield put(mapToStateProfile(action.payload));
   }
 }
 
@@ -78,7 +67,7 @@ export function* routeListSaga(action) {
 }
 
 export function* routeSaga() {
-  yield takeLatest(ROUTE, routeListSaga);
+  yield takeLatest(GETROUTE, routeListSaga);
 }
 
 export function* addressListSaga() {
@@ -88,5 +77,5 @@ export function* addressListSaga() {
 }
 
 export function* addressSaga() {
-  yield takeLatest(ADDRESS, addressListSaga);
+  yield takeLatest(GETADDRESS, addressListSaga);
 }

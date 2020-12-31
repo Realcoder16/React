@@ -22,6 +22,13 @@ class Map extends Component {
   };
 
   drawRoute = (map, coordinates) => {
+    if (map.getLayer("route")) {
+      map.removeLayer("route");
+    }
+    if (map.getSource("route")) {
+      map.removeSource("route");
+    }
+
     map.flyTo({
       center: coordinates[0],
       zoom: 15,
@@ -66,13 +73,8 @@ class Map extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (isEqual(this.props.coordinates, prevProps.coordinates)) {
-      console.log("Маршрут не менялся");
-      console.log(this.props.coordinates);
-    } else {
+    if (!isEqual(this.props.coordinates, prevProps.coordinates)) {
       this.drawRoute(this.map, this.props.coordinates);
-      console.log("Маршрут поменялся");
-      console.log(this.props.coordinates);
     }
   }
 
