@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import mapboxgl from "mapbox-gl";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { route, getAddressList } from "./action";
+import { route, getAddressList, getProfile } from "../../action";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import Paper from "@material-ui/core/Paper";
-import { isEqual } from "lodash";
+import Button from "@material-ui/core/Button";
+import { isEqual, values, isEmpty } from "lodash";
 
 class Map extends Component {
   constructor(props) {
@@ -60,7 +62,9 @@ class Map extends Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(getAddressList());
+    const { dispatch, token } = this.props;
+    dispatch(getAddressList());
+    dispatch(getProfile(token));
 
     mapboxgl.accessToken =
       "pk.eyJ1IjoicmVhbGNvZGVyMTYiLCJhIjoiY2toejgyZXYwMDg0ZzJycWtucWNzaDg4OCJ9.x9kh7bQkbm9kSFwAxHYwAg";
@@ -91,7 +95,9 @@ class Map extends Component {
     };
 
     const { to, from } = this.state;
-    const { addresses } = this.props;
+    const { addresses, profile } = this.props;
+
+    const isProfileFilled = values(profile).every((value) => !isEmpty(value));
 
     return (
       <div className="map-wrapper">
@@ -104,35 +110,52 @@ class Map extends Component {
         <>
           <form className="taxi">
             <Paper className="paper">
-              <label htmlFor="from">Откуда</label>
-              <Select
-                value={from}
-                onChange={(event) =>
-                  this.setState({ from: event.target.value })
-                }
-              >
-                {this.props.addresses.map((address) => (
-                  <MenuItem key={address} value={address}>
-                    {address}
-                  </MenuItem>
-                ))}
-              </Select>
-              <label htmlFor="to">Куда</label>
+              {!isProfileFilled ? (
+                <p>
+                  Пожалуйста, заполните профиль{" "}
+                  <Button>
+                    <Link to="/profile">Перейти</Link>
+                  </Button>
+                </p>
+              ) : (
+                <>
+                  <label htmlFor="from">Откуда</label>
+                  <Select
+                    value={from}
+                    onChange={(event) =>
+                      this.setState({ from: event.target.value })
+                    }
+                  >
+                    {addresses
+                      .filter((address) => address !== to)
+                      .map((address) => (
+                        <MenuItem key={address} value={address}>
+                          {address}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                  <label htmlFor="to">Куда</label>
 
-              <Select
-                value={to}
-                onChange={(event) => this.setState({ to: event.target.value })}
-              >
-                {addresses.map((address) => (
-                  <MenuItem key={address} value={address}>
-                    {address}
-                  </MenuItem>
-                ))}
-              </Select>
+                  <Select
+                    value={to}
+                    onChange={(event) =>
+                      this.setState({ to: event.target.value })
+                    }
+                  >
+                    {addresses
+                      .filter((address) => address !== from)
+                      .map((address) => (
+                        <MenuItem key={address} value={address}>
+                          {address}
+                        </MenuItem>
+                      ))}
+                  </Select>
 
-              <button type="submit" onClick={this.handleMapState}>
-                Вызвать такси
-              </button>
+                  <button type="submit" onClick={this.handleMapState}>
+                    Вызвать такси
+                  </button>
+                </>
+              )}
             </Paper>
           </form>
         </>
@@ -144,4 +167,6 @@ class Map extends Component {
 export default connect((state) => ({
   coordinates: state.map,
   addresses: state.address,
+  profile: state.profile,
+  token: state.auth.token,
 }))(Map);

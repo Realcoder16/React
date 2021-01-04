@@ -1,16 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Grid, Paper, TextField, Typography } from "@material-ui/core";
 import { connect } from "react-redux";
-import { saveProfile } from "./action";
-import { Link } from "react-router-dom";
+import { saveProfile, getProfile } from "../../action";
 
-const Profile = ({ dispatch, mapIn, token }) => {
-  const [cardName, setCardName] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [expireDate, setExpireDate] = useState("");
-  const [cvc, setCvc] = useState("");
+const Profile = ({ dispatch, token, profile }) => {
+  const [cardName, setCardName] = useState(profile.cardName);
+  const [cardNumber, setCardNumber] = useState(profile.cardNumber);
+  const [expiryDate, setExpiryDate] = useState(profile.expiryDate);
+  const [cvc, setCvc] = useState(profile.cvc);
+
+  useEffect(() => {
+    dispatch(getProfile(token));
+  }, []);
+
+  useEffect(() => {
+    setCardName(profile.cardName);
+    setCardNumber(profile.cardNumber);
+    setExpiryDate(profile.expiryDate);
+    setCvc(profile.cvc);
+  }, []);
+
   const handleSave = () => {
-    dispatch(saveProfile({ cardName, cardNumber, expireDate, cvc, token }));
+    dispatch(saveProfile({ cardName, cardNumber, expiryDate, cvc, token }));
   };
   return (
     <>
@@ -46,8 +57,8 @@ const Profile = ({ dispatch, mapIn, token }) => {
                   <TextField
                     fullWidth
                     label="MM/YY"
-                    value={expireDate}
-                    onChange={(event) => setExpireDate(event.target.value)}
+                    value={expiryDate}
+                    onChange={(event) => setExpiryDate(event.target.value)}
                   />
                 </Grid>
 
@@ -83,5 +94,6 @@ const Profile = ({ dispatch, mapIn, token }) => {
 };
 
 export default connect((state) => ({
+  profile: state.profile,
   token: state.auth.token,
 }))(Profile);

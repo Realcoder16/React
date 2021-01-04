@@ -4,7 +4,7 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import auth from "./reducers/auth";
+import auth from "../../reducers/auth";
 
 jest.mock("./Login", () => () => <div>Login content</div>);
 jest.mock("./Map", () => () => <div>Map content</div>);

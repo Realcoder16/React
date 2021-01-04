@@ -1,10 +1,10 @@
-import { FILLROUTE } from "../action";
+import { FILL_ROUTE } from "../action";
 
 const initialState = [];
 
 export default function mapReducer(state = initialState, action) {
   switch (action.type) {
-    case FILLROUTE: {
+    case FILL_ROUTE: {
       return action.payload;
     }
 

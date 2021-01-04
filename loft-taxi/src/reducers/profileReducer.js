@@ -1,11 +1,17 @@
-import { GETPROFILE } from "../action";
+import { FILL_PROFILE } from "../action";
 
-const initialState = [];
+const initialState = {
+  cardName: "",
+  cardNumber: "",
+  expireDate: "",
+  cvc: "",
+};
 
 export default function profileReducer(state = initialState, action) {
   switch (action.type) {
-    case GETPROFILE: {
-      return action.payload;
+    case FILL_PROFILE: {
+      const { token, ...profile } = action.payload;
+      return profile;
     }
 
     default:

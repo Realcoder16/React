@@ -1,10 +1,10 @@
-import { STOREADDRESS } from "../action";
+import { STORE_ADDRESS } from "../action";
 
 const initialState = [];
 
 export default function addressListReducer(state = initialState, action) {
   switch (action.type) {
-    case STOREADDRESS: {
+    case STORE_ADDRESS: {
       return action.payload;
     }
 

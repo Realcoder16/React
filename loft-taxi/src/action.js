@@ -3,13 +3,14 @@ export const LOG_OUT = "LOG_OUT";
 export const AUTHENTICATE = "AUTHENTICATE";
 export const REGISTRATION = "REGISTRATION";
 export const SAVE_IT = "loft-taxi/profile/save";
-export const GETROUTE = "ROUTE";
-export const GETADDRESS = "ADDRESS";
-export const FILLROUTE = "FILLROUTE";
-export const GETPROFILE = "PROFILE";
-export const STOREADDRESS = "STOREADDRESS";
+export const GET_ROUTE = "ROUTE";
+export const GET_ADDRESS = "ADDRESS";
+export const FILL_ROUTE = "FILLROUTE";
+export const FILL_PROFILE = "FILLPROFILE";
+export const STORE_ADDRESS = "STOREADDRESS";
+export const GET_PROFILE = "GETPROFILE";
 
-export const logIn = (token) => ({ type: LOG_IN, payload: { token } });
+export const logIn = (payload) => ({ type: LOG_IN, payload });
 export const logOut = () => ({ type: LOG_OUT });
 export const authenticate = (email, password, token) => ({
   type: AUTHENTICATE,
@@ -25,26 +26,31 @@ export const saveProfile = (payload) => ({
   payload,
 });
 
-export const mapToStateProfile = (response) => ({
-  type: GETPROFILE,
-  payload: { response },
+export const getProfile = (payload) => ({
+  type: GET_PROFILE,
+  payload,
+});
+
+export const fillProfile = (payload) => ({
+  type: FILL_PROFILE,
+  payload,
 });
 
 export const route = (payload) => ({
-  type: GETROUTE,
+  type: GET_ROUTE,
   payload,
 });
 
 export const fillroute = (payload) => ({
-  type: FILLROUTE,
+  type: FILL_ROUTE,
   payload,
 });
 
 export const getAddressList = () => ({
-  type: GETADDRESS,
+  type: GET_ADDRESS,
 });
 
 export const storeAddress = (address) => ({
-  type: STOREADDRESS,
+  type: STORE_ADDRESS,
   payload: address,
 });

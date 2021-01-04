@@ -46,3 +46,9 @@ export const getAddress = async (data) => {
     res.json()
   );
 };
+
+export const getProfile = async (token) => {
+  return fetch(`https://loft-taxi.glitch.me/card?token=${token}`).then((res) =>
+    res.json()
+  );
+};
